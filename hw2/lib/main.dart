@@ -1,0 +1,155 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Calculator UI',
+      theme: ThemeData(
+        brightness: Brightness.light,
+        scaffoldBackgroundColor: Colors.white,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: Colors.orange,
+          secondary: Colors.orangeAccent,
+        ),
+      ),
+      home: const CalculatorFormUI(),
+    );
+  }
+}
+
+class CalculatorFormUI extends StatefulWidget {
+  const CalculatorFormUI({super.key});
+
+  @override
+  State<CalculatorFormUI> createState() => _CalculatorFormUIState();
+}
+
+class _CalculatorFormUIState extends State<CalculatorFormUI> {
+  String display = "0";
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Calculator"),
+        backgroundColor: Colors.deepOrange,
+        centerTitle: false,
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+
+            /// Display text
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+              width: double.infinity,
+              alignment: Alignment.bottomRight,
+              child: Text(
+                display,
+                style: const TextStyle(
+                  fontSize: 48,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+            ),
+
+            const Spacer(),
+
+            /// Button Panel
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 12,
+                    offset: const Offset(0, -3),
+                  ),
+                ],
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
+                ),
+              ),
+
+              /// ==== TABLE BUTTON LAYOUT ====
+              child: Table(
+                children: [
+                  TableRow(children: _buildRow(["C", "<", "%", "÷"])),
+                  TableRow(children: _buildRow(["7", "8", "9", "×"])),
+                  TableRow(children: _buildRow(["4", "5", "6", "-"])),
+                  TableRow(children: _buildRow(["1", "2", "3", "+"])),
+
+                  TableRow(
+                    children: [
+                      _buildButton(""),
+                      _buildButton("0"),
+                      _buildButton("."),
+                      _buildButton("="),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// --- Helper: Build normal row ---
+  List<Widget> _buildRow(List<String> items) {
+    return items.map((e) => _buildButton(e)).toList();
+  }
+
+  /// --- Helper: Build a single button ---
+  Widget _buildButton(String label, {bool isDouble = false}) {
+    return Container(
+      margin: const EdgeInsets.all(6),
+      height: isDouble ? 130 : 65, // สูงเป็น 2 ช่องสำหรับปุ่ม “=”
+      decoration: BoxDecoration(
+        color: _buttonColor(label),
+        borderRadius: BorderRadius.circular(18),
+      ),
+      child: Center(
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+            color: _textColor(label),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// สีปุ่ม
+  Color _buttonColor(String btn) {
+    if (btn == "C") return Colors.orange.shade300;
+    if (["%", "÷", "×", "-", "+", "=", "<"].contains(btn)) {
+      return Colors.orange.shade200;
+    }
+    return Colors.orange.shade50;
+  }
+
+  /// สีตัวอักษรบนปุ่ม
+  Color _textColor(String btn) {
+    if (btn == "C") return Colors.white;
+    if (["%", "÷", "×", "-", "+", "="].contains(btn)) {
+      return Colors.black;
+    }
+    return Colors.black87;
+  }
+}
