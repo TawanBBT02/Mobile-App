@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:week2_1/main%20-%20Copy.dart';
 
 void main() {
   runApp(MyApp());
@@ -54,7 +53,6 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Icon(Icons.add),
             ),
-            Padding(padding: padding),
             FloatingActionButton(
               onPressed: () {
                 setState(() {
