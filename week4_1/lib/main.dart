@@ -28,12 +28,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Foodmenu> foodmenus = [
-    Foodmenu("ข้าวผัด", "30"),
-    Foodmenu("ผัดกระเพรา", "40"),
+  List<Foodmenu> menu = [
+    Foodmenu("กุ้งเผา", "500"),
+    Foodmenu("ปลาเผา", "300"),
+    Foodmenu("ผัดกระเพราหมู", "50"),
     Foodmenu("ต้มยำกุ้ง", "50"),
-    Foodmenu("ส้มตำ", "25"),
-    Foodmenu("ลาบหมู", "35"),
+    Foodmenu("ข้าวมันไก่", "40"),
+    Foodmenu("ส้มตำ", "45"),
+    Foodmenu("ลาบหมู", "70"),
   ];
 
   List<Widget> getData(int count) {
@@ -66,22 +68,25 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
 
       body: ListView.builder(
-        itemCount: 15,
+        itemCount: 7,
         itemBuilder: (BuildContext context, int index) {
+          Foodmenu food = menu[index];
           return ListTile(
             title: Text(
               "Menu ${index + 1}",
               style: TextStyle(fontSize: 20, color: Colors.red),
             ),
+            subtitle: Text(food.foodName + " ราคา " + food.foodPrice + " บาท"),
           );
         },
       ),
 
+      /*
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ),
+      ),*/
     );
   }
 }
