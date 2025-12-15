@@ -40,6 +40,70 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
+  void pressNumber(String value) {
+    setState(() {
+      if (operator.isEmpty) {
+        num1 += value;
+        display = num1;
+      } else {
+        num2 += value;
+        display = num2;
+      }
+    });
+  }
+
+  void pressOperator(String op) {
+    setState(() {
+      operator = op;
+    });
+  }
+
+  void clear() {
+    setState(() {
+      num1 = "";
+      num2 = "";
+      operator = "";
+      display = "0";
+    });
+  }
+
+  void calculate() {
+    if (num1.isEmpty || num2.isEmpty || operator.isEmpty) return;
+
+    double n1 = double.tryParse(num1) ?? 0;
+    double n2 = double.tryParse(num2) ?? 0;
+    double result = 0;
+
+    switch (operator) {
+      case "+":
+        result = n1 + n2;
+        break;
+      case "-":
+        result = n1 - n2;
+        break;
+      case "*":
+        result = n1 * n2;
+        break;
+      case "/":
+        if (n2 != 0) {
+          result = n1 / n2;
+        } else {
+          display = "Error";
+          return;
+        }
+        break;
+      default:
+        return;
+    }
+
+    setState(() {
+      display = result.toString();
+      num1 = display;
+      num2 = "";
+      operator = "";
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,10 +118,10 @@ class _MyAppState extends State<MyApp> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                calcBtn("7", () {}),
-                calcBtn("8", () {}),
-                calcBtn("9", () {}),
-                calcBtn("+", () {}),
+                calcBtn("7", () => pressNumber("7")),
+                calcBtn("8", () => pressNumber("8")),
+                calcBtn("9", () => pressNumber("9")),
+                calcBtn("+", () => pressOperator("+")),
               ],
             ),
             SizedBox(height: 10),
@@ -65,10 +129,10 @@ class _MyAppState extends State<MyApp> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                calcBtn("4", () {}),
-                calcBtn("5", () {}),
-                calcBtn("6", () {}),
-                calcBtn("-", () {}),
+                calcBtn("4", () => pressNumber("4")),
+                calcBtn("5", () => pressNumber("5")),
+                calcBtn("6", () => pressNumber("6")),
+                calcBtn("-", () => pressOperator("-")),
               ],
             ),
             SizedBox(height: 10),
@@ -76,10 +140,10 @@ class _MyAppState extends State<MyApp> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                calcBtn("1", () {}),
-                calcBtn("2", () {}),
-                calcBtn("3", () {}),
-                calcBtn("*", () {}),
+                calcBtn("1", () => pressNumber("1")),
+                calcBtn("2", () => pressNumber("2")),
+                calcBtn("3", () => pressNumber("3")),
+                calcBtn("*", () => pressOperator("*")),
               ],
             ),
             SizedBox(height: 10),
@@ -87,12 +151,13 @@ class _MyAppState extends State<MyApp> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                calcBtn("0", () {}),
-                calcBtn("C", () {}),
-                calcBtn("=", () {}),
-                calcBtn("/", () {}),
+                calcBtn("0", () => pressNumber("0")),
+                calcBtn("C", () => clear()),
+                calcBtn("=", () => calculate()),
+                calcBtn("/", () => pressOperator("/")),
               ],
             ),
+            SizedBox(height: 10),
           ],
         ),
       ),
