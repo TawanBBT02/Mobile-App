@@ -1,0 +1,21 @@
+employees = {
+
+1: {"Name": "John", "TelephoneNumber": "123-456-7890", "Department": "HR", "Salary": 50000},
+2: {"Name": "Alice", "TelephoneNumber": "234-567-8901", "Department": "IT", "Salary": 60000},
+3: {"Name": "Bob", "TelephoneNumber": "345-678-9012", "Department": "Sales", "Salary": 55000},
+4: {"Name": "Sarah", "TelephoneNumber": "456-789-0123", "Department": "Marketing", "Salary": 52000},
+5: {"Name": "Mike", "TelephoneNumber": "567-890-1234", "Department": "Finance", "Salary": 58000},
+6: {"Name": "Emily", "TelephoneNumber": "678-901-2345", "Department": "IT", "Salary": 62000},
+7: {"Name": "David", "TelephoneNumber": "789-012-3456", "Department": "Sales", "Salary": 53000},
+8: {"Name": "Linda", "TelephoneNumber": "890-123-4567", "Department": "Marketing", "Salary": 51000},
+9: {"Name": "Chris", "TelephoneNumber": "901-234-5678", "Department": "Finance", "Salary": 59000},
+10: {"Name": "Julia", "TelephoneNumber": "012-345-6789", "Department": "HR", "Salary": 51000}
+}
+
+max_emp = max(employees.values(), key=lambda x: x["Salary"])
+min_emp = min(employees.values(), key=lambda x: x["Salary"])
+
+total = sum(emp["Salary"] for emp in employees.values()) /len(employees)
+print("เงินเดือนสูงสุด :" , max_emp["Name"], max_emp["Salary"])
+print("เงินเดือนต่ำสุด :" , min_emp["Name"], min_emp["Salary"])
+print("เงินเดือนเฉลีย :" , total)
